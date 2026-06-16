@@ -290,6 +290,42 @@
       margin-bottom: 56px;
     }
 
+    /* ── CAMPOS CEP REVEAL ── */
+    .cep-fields {
+      display: contents;
+    }
+    .cep-hidden {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity .5s ease, max-height .5s ease, margin .5s ease;
+      margin-top: 0;
+    }
+    .cep-hidden.revealed {
+      opacity: 1;
+      max-height: 200px;
+      pointer-events: all;
+      margin-top: 0;
+    }
+    /* wrapper para animar o grid inteiro */
+    .cep-reveal-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      grid-column: 1 / -1;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity .55s ease, max-height .55s ease;
+    }
+    .cep-reveal-group.revealed {
+      opacity: 1;
+      max-height: 600px;
+      pointer-events: all;
+    }
+
     /* ── FORM BLOCKS ── */
     .form-block {
       margin-bottom: 48px;
@@ -742,49 +778,53 @@
     <!-- II. ENDEREÇO -->
 <div class="form-block" data-reveal>
       <div class="form-grid col-2">
-        <div class="field col-full" style="grid-column:1/-1;">
-          <label>Endereço <span class="req">*</span></label>
-          <input type="text" id="endereco" placeholder="Rua, Avenida, Alameda…" />
-          <span class="field-error">Informe o endereço.</span>
-        </div>
-        <div class="field">
-          <label>Número <span class="req">*</span></label>
-          <input type="text" id="numero" placeholder="000" />
-          <span class="field-error">Informe o número.</span>
-        </div>
-        <div class="field">
-          <label>Complemento</label>
-          <input type="text" id="complemento" placeholder="Apto, sala, bloco…" />
-        </div>
-        <div class="field">
-          <label>Bairro <span class="req">*</span></label>
-          <input type="text" id="bairro" placeholder="Bairro" />
-          <span class="field-error">Informe o bairro.</span>
-        </div>
-        <div class="field">
-          <label>Cidade <span class="req">*</span></label>
-          <input type="text" id="cidade" placeholder="Cidade" />
-          <span class="field-error">Informe a cidade.</span>
-        </div>
-        <div class="field">
-          <label>UF <span class="req">*</span></label>
-          <select id="uf">
-            <option value="" disabled selected>UF</option>
-            <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
-            <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
-            <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
-            <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
-            <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
-            <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
-            <option selected>SP</option><option>SE</option><option>TO</option>
-          </select>
-          <span class="field-error">Selecione o estado.</span>
-        </div>
         <div class="field">
           <label>CEP <span class="req">*</span></label>
           <input type="text" id="cep" placeholder="00000-000" maxlength="9" />
           <span class="field-error">Informe um CEP válido.</span>
         </div>
+
+        <div class="cep-reveal-group" id="cep-reveal-group">
+          <div class="field col-full" style="grid-column:1/-1;">
+            <label>Endereço <span class="req">*</span></label>
+            <input type="text" id="endereco" placeholder="Preenchido automaticamente pelo CEP" />
+            <span class="field-error">Informe o endereço.</span>
+          </div>
+          <div class="field">
+            <label>Bairro <span class="req">*</span></label>
+            <input type="text" id="bairro" placeholder="Preenchido automaticamente" />
+            <span class="field-error">Informe o bairro.</span>
+          </div>
+          <div class="field">
+            <label>Cidade <span class="req">*</span></label>
+            <input type="text" id="cidade" placeholder="Preenchida automaticamente" />
+            <span class="field-error">Informe a cidade.</span>
+          </div>
+          <div class="field">
+            <label>UF <span class="req">*</span></label>
+            <select id="uf">
+              <option value="" disabled selected>UF</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+              <option selected>SP</option><option>SE</option><option>TO</option>
+            </select>
+            <span class="field-error">Selecione o estado.</span>
+          </div>
+          <div class="field">
+            <label>Número <span class="req">*</span></label>
+            <input type="text" id="numero" placeholder="000" />
+            <span class="field-error">Informe o número.</span>
+          </div>
+          <div class="field">
+            <label>Complemento</label>
+            <input type="text" id="complemento" placeholder="Apto, sala, bloco…" />
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -934,9 +974,21 @@
           document.getElementById('bairro').value    = d.bairro    || '';
           document.getElementById('cidade').value    = d.localidade|| '';
           document.getElementById('uf').value        = d.uf        || '';
-          document.getElementById('numero').focus();
+          ['endereco','bairro','cidade','uf'].forEach(id => {
+            const el = document.getElementById(id);
+            el.classList.remove('error');
+            el.closest('.field').classList.remove('show-error');
+          });
+          document.getElementById('cep-reveal-group').classList.add('revealed');
+          setTimeout(() => document.getElementById('numero').focus(), 300);
+        } else {
+          // CEP não encontrado — revela igualmente para preenchimento manual
+          document.getElementById('cep-reveal-group').classList.add('revealed');
+          setTimeout(() => document.getElementById('endereco').focus(), 300);
         }
-      } catch(e) {}
+      } catch(e) {
+        document.getElementById('cep-reveal-group').classList.add('revealed');
+      }
     });
 
     /* ── VALIDATION ── */
@@ -1076,45 +1128,29 @@
       const comp = payload.complemento || '—';
 
       const msg =
-`✦ NOVA FICHA DE MATRÍCULA — MD TALK
+`NOVA FICHA — MD TALK
 
-━━━━━━━━━━━━━━━━━━━━
-📋 IDENTIFICAÇÃO
-━━━━━━━━━━━━━━━━━━━━
+IDENTIFICAÇÃO
 Nome: ${payload.nome}
 CPF: ${payload.cpf}
 Nascimento: ${nasc}
 Telefone: ${payload.telefone}
 E-mail: ${payload.email}
 
-━━━━━━━━━━━━━━━━━━━━
-🏥 DADOS PROFISSIONAIS
-━━━━━━━━━━━━━━━━━━━━
+DADOS PROFISSIONAIS
 Profissão: ${payload.profissao}
 Especialidade: ${payload.especialidade || '—'}
 
-━━━━━━━━━━━━━━━━━━━━
-📍 ENDEREÇO
-━━━━━━━━━━━━━━━━━━━━
-${payload.endereco}, ${payload.numero}
-Complemento: ${comp}
-Bairro: ${payload.bairro}
-${payload.cidade} — ${payload.uf}
+ENDEREÇO
+${payload.endereco}, ${payload.numero}${payload.complemento ? ', ' + payload.complemento : ''}
+${payload.bairro} — ${payload.cidade}/${payload.uf}
 CEP: ${payload.cep}
 
-━━━━━━━━━━━━━━━━━━━━
-📚 PROGRAMA
-━━━━━━━━━━━━━━━━━━━━
+PROGRAMA
 Modalidade: ${payload.modalidade}
 Curadoria: ${payload.curadoria}
 
-━━━━━━━━━━━━━━━━━━━━
-✅ TERMOS ACEITOS
-━━━━━━━━━━━━━━━━━━━━
-Cond. pagamento: ${payload.termoPagamento}
-Política cancelamento: ${payload.termoCancelamento}
-
-Data/hora: ${payload.timestamp}`;
+Data: ${payload.timestamp}`;
 
       const url = `https://wa.me/5514997758941?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
