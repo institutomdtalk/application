@@ -943,13 +943,11 @@
     function required(id) {
       const el = document.getElementById(id);
       const wrap = el.closest('.field');
-      const val = el.value.trim();
-      const ok = val !== '' && val !== (el.tagName === 'SELECT' ? '' : val);
+      let ok;
       if (el.tagName === 'SELECT') {
-        const ok2 = el.value !== '';
-        el.classList.toggle('error', !ok2);
-        wrap.classList.toggle('show-error', !ok2);
-        return ok2;
+        ok = el.value !== '';
+      } else {
+        ok = el.value.trim() !== '';
       }
       el.classList.toggle('error', !ok);
       wrap.classList.toggle('show-error', !ok);
