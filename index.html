@@ -209,23 +209,45 @@
       max-width: 720px;
       margin: 0 auto;
     }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
     .scroll-indicator {
       margin-top: 56px;
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: .68rem;
       letter-spacing: .22em;
       color: var(--muted);
       text-transform: uppercase;
+      cursor: pointer;
+      transition: color .25s;
+      user-select: none;
     }
-    .scroll-indicator::after {
+    .scroll-indicator:hover { color: var(--gold-pale); }
+    .scroll-indicator .si-arrow {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(196,164,90,.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounce 1.8s ease-in-out infinite;
+      transition: border-color .25s, background .25s;
+    }
+    .scroll-indicator:hover .si-arrow {
+      border-color: var(--gold);
+      background: rgba(196,164,90,.08);
+    }
+    .scroll-indicator .si-arrow::after {
       content: '';
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: geoPulse 2.5s ease-in-out infinite;
+      width: 8px; height: 8px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: rotate(45deg) translate(-2px, -2px);
     }
 
     /* ── FORM SECTION ── */
@@ -654,7 +676,10 @@
       <h1>Program<br><em>Application</em></h1>
       <div class="hero-divider"></div>
       <p>Chegou a hora de formalizarmos o nosso combinado.<br>Abaixo estão alguns dados de que vamos precisar para inserirmos no seu contrato.</p>
-      <div class="scroll-indicator">Preencher ficha</div>
+      <div class="scroll-indicator" id="scroll-down">
+        Preencher ficha
+        <span class="si-arrow"></span>
+      </div>
       <p class="submit-note" style="margin-top:16px;font-size:.62rem;">Campos marcados com <span style="color:var(--gold);">*</span> são obrigatórios</p>
     </div>
   </section>
@@ -880,6 +905,11 @@
   </div>
 
   <script>
+    /* ── SCROLL DOWN ── */
+    document.getElementById('scroll-down').addEventListener('click', () => {
+      document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
     /* ── APPS SCRIPT URL ── substituir pela URL da sua implantação ── */
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/SEU_ID_AQUI/exec';
 
