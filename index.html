@@ -252,12 +252,12 @@
 
     /* ── FORM SECTION ── */
     .form-section {
-      padding: 100px 48px 120px;
-      max-width: 820px;
+      padding: 80px 48px 100px;
+      max-width: 720px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 40px;
     }
 
     .section-label {
@@ -670,11 +670,6 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="geo geo-ring-1"></div>
-    <div class="geo geo-ring-2"></div>
-    <div class="geo geo-diamond"></div>
-    <div class="geo geo-line"></div>
-
     <div class="hero-inner">
       <span class="overline">Instituto MD Talk</span>
       <h1>Application<br><em>Form</em></h1>
@@ -690,9 +685,8 @@
   <!-- FORM -->
   <section class="form-section">
 
-    <!-- I. IDENTIFICAÇÃO -->
-<div class="form-block" data-reveal>
-      <div class="block-label">Dados pessoais</div>
+    <!-- DADOS PESSOAIS -->
+    <div class="form-block" data-reveal>
       <div class="form-grid col-2">
         <div class="field col-full">
           <label>Nome completo <span class="req">*</span></label>
@@ -708,10 +702,6 @@
           <label>Data de nascimento</label>
           <input type="date" id="nascimento" />
         </div>
-    </div>
-
-    <div class="form-block" data-reveal>
-      <div class="form-grid col-2">
         <div class="field">
           <label>Profissão <span class="req">*</span></label>
           <select id="profissao">
@@ -727,12 +717,16 @@
           <label>Especialidade / Área</label>
           <input type="text" id="especialidade" placeholder="Ex: Cardiologia, Oncologia…" />
         </div>
-
+        <div class="field">
+          <label>E-mail <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" />
+          <span class="field-error">Informe um e-mail válido.</span>
+        </div>
       </div>
     </div>
 
-    <!-- II. ENDEREÇO -->
-<div class="form-block" data-reveal>
+    <!-- ENDEREÇO -->
+    <div class="form-block" data-reveal>
       <div class="form-grid col-2">
         <div class="field">
           <label>CEP <span class="req">*</span></label>
@@ -780,13 +774,11 @@
             <input type="text" id="complemento" placeholder="Apto, sala, bloco…" />
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- III. MODALIDADE -->
-<div class="form-block" data-reveal>
-      <div class="block-label">Formato de aula</div>
+    <!-- MODALIDADE -->
+    <div class="form-block" data-reveal>
       <div class="form-grid col-2">
         <div class="field">
           <label>Modalidade <span class="req">*</span></label>
@@ -801,8 +793,8 @@
       </div>
     </div>
 
+    <!-- CURADORIA -->
     <div class="form-block" data-reveal>
-      <div class="block-label">Curadoria</div>
       <label class="check-row">
         <input type="checkbox" id="curadoria" />
         <span class="check-box"></span>
@@ -810,21 +802,27 @@
       </label>
     </div>
 
+    <!-- TERMOS -->
     <div class="form-block" data-reveal>
-      <div class="block-label">Condições de pagamento</div>
       <div class="termo-box">
-        <p class="termo-texto">O pagamento da mensalidade é realizado de forma antecipada, no início de cada ciclo de 30 dias, sempre na mesma data do mês. A ausência ou o não comparecimento às aulas não isentam o aluno do pagamento da mensalidade.</p>
+        <p class="termo-texto">O primeiro pagamento é realizado na data da formalização deste contrato e os demais a cada 30 dias a contar da data da primeira aula. A ausência ou o não comparecimento às aulas não isentam o aluno do pagamento da mensalidade.</p>
         <label class="check-row" style="margin-top:20px;">
           <input type="checkbox" id="termo-pagamento" />
           <span class="check-box"></span>
           <span class="check-text">Estou de acordo <span style="color:var(--gold);">*</span></span>
         </label>
         <span class="field-error" id="erro-pagamento">É necessário concordar para continuar.</span>
+        <div class="pix-reveal" id="pix-reveal">
+          <p class="pix-label">Chave PIX</p>
+          <div class="pix-box">
+            <span class="pix-key" id="pix-key">38315226851</span>
+            <button class="pix-copy" id="pix-copy" type="button">Copiar</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="form-block" data-reveal>
-      <div class="block-label">Política de cancelamento</div>
       <div class="termo-box">
         <p class="termo-texto">Caso seja necessário interromper o curso por qualquer motivo, solicitamos que a comunicação seja feita com pelo menos 21 (vinte e um) dias de antecedência à data de vencimento da próxima mensalidade. Esse prazo é essencial para que possamos nos reorganizar adequadamente.</p>
         <label class="check-row" style="margin-top:20px;">
