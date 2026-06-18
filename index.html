@@ -314,27 +314,21 @@
     .submit-wrap { text-align: center; padding-top: 16px; }
     .btn-submit {
       display: inline-flex; align-items: center; gap: 12px;
-      background: linear-gradient(
-        110deg,
-        #1a73e8 0%, #1a65cc 25%, #2d7ff0 45%,
-        #4d95f5 50%, #2d7ff0 55%, #1a65cc 75%, #1a73e8 100%
-      );
-      background-size: 300% auto;
-      animation: meetShimmer 9s linear infinite;
-      color: #ffffff; border: none; border-radius: 6px;
+      background: var(--gold);
+      color: var(--navy-deep); border: none; border-radius: 3px;
       font-family: 'Raleway', sans-serif; font-size: .8rem;
       font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
       padding: 18px 52px; cursor: pointer;
-      transition: transform .2s, box-shadow .25s;
+      transition: background .25s, transform .2s, box-shadow .25s;
     }
     .btn-submit:hover {
+      background: var(--gold-light);
       transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(66,133,244,.4);
+      box-shadow: 0 12px 36px rgba(196,164,90,.3);
     }
     .btn-submit:active { transform: translateY(0); }
     .btn-submit:disabled {
       opacity: .6; cursor: not-allowed; transform: none;
-      animation: none; background: #1a73e8;
     }
 
     /* MODAL */
