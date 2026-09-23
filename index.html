@@ -63,8 +63,8 @@
     }
     .hero-body { position: relative; z-index: 2; max-width: 900px; }
     .eyebrow {
-      font-family: var(--util); font-size: 10px; font-weight: 500;
-      letter-spacing: .4em; text-transform: uppercase;
+      font-family: var(--util); font-size: 11px; font-weight: 500;
+      letter-spacing: .3em; text-transform: uppercase;
       display: flex; align-items: center; gap: 14px; color: var(--brass-lift);
     }
     .eyebrow::before { content:""; width:26px; height:var(--rule); background:currentColor; opacity:.55; }
@@ -83,7 +83,7 @@
     .hero-sub::after { content:""; flex:1; height:var(--rule); background:rgba(255,255,255,.22); }
     .hero-desc {
       margin-top: 28px; max-width: 520px;
-      font-size: 13.5px; line-height: 1.85; font-weight: 300; color: var(--ink-mute);
+      font-size: 15px; line-height: 1.85; font-weight: 300; color: var(--ink-mute);
     }
     .hero-cue {
       margin-top: clamp(44px,7vh,72px);
@@ -103,16 +103,16 @@
     #form-section { background: var(--paper); padding: clamp(80px,11vh,120px) var(--pad); }
     .inner { width:100%; max-width:860px; margin:0 auto; }
 
-    .form-block { margin-bottom: 52px; }
+    .form-block { margin-bottom: 64px; }
     .block-eyebrow {
-      font-family: var(--util); font-size: 9.5px; font-weight: 500;
-      letter-spacing: .38em; text-transform: uppercase;
+      font-family: var(--util); font-size: 11px; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
       display: flex; align-items: center; gap: 14px;
-      color: var(--brass); margin-bottom: 32px;
+      color: var(--brass); margin-bottom: 36px;
     }
     .block-eyebrow::before { content:""; width:26px; height:var(--rule); background:currentColor; opacity:.55; }
 
-    .form-grid { display:grid; gap:20px; }
+    .form-grid { display:grid; gap:28px; }
     .col-2 { grid-template-columns:1fr 1fr; }
     .col-full { grid-column:1/-1; }
 
@@ -125,7 +125,7 @@
 
     .field { display:flex; flex-direction:column; gap:9px; }
     .field label {
-      font-size: 9px; font-weight: 500; letter-spacing: .36em;
+      font-size: 11px; font-weight: 500; letter-spacing: .22em;
       color: var(--paper-mute); text-transform: uppercase;
     }
     .field label .req { color: var(--brass); margin-left: 2px; }
@@ -133,15 +133,15 @@
       background: transparent; border: none;
       border-bottom: var(--rule) solid rgba(7,14,27,.2);
       color: var(--paper-text); font-family: var(--display);
-      font-size: 19px; font-weight: 300;
-      padding: 10px 0 12px; outline: none;
+      font-size: 22px; font-weight: 300;
+      padding: 12px 0 14px; outline: none;
       transition: border-color .25s; width: 100%;
       -webkit-appearance: none; border-radius: 0;
     }
-    .field input::placeholder { color:rgba(20,28,43,.25); font-style:italic; }
+    .field input::placeholder { color:rgba(20,28,43,.22); font-style:italic; font-size:20px; }
     .field input:focus, .field select:focus { border-bottom-color: var(--brass); }
     .field input.error, .field select.error { border-bottom-color: var(--error); }
-    .field .field-error { font-size:10px; color:var(--error); letter-spacing:.08em; display:none; }
+    .field .field-error { font-size:11px; color:var(--error); letter-spacing:.06em; display:none; }
     .field.show-error .field-error { display:block; }
     .field select option { background: var(--paper); color: var(--paper-text); }
     input[type="date"]::-webkit-calendar-picker-indicator { filter:none; opacity:.4; }
@@ -155,8 +155,8 @@
       border-radius: 3px;
       padding: 24px 26px;
     }
-    .termo-texto { font-size:13px; line-height:1.9; color:var(--paper-mute); font-weight:300; }
-    .termo-box .field-error { font-size:10px; color:var(--error); letter-spacing:.08em; display:none; margin-top:10px; }
+    .termo-texto { font-size:14px; line-height:1.9; color:var(--paper-mute); font-weight:300; }
+    .termo-box .field-error { font-size:11px; color:var(--error); letter-spacing:.06em; display:none; margin-top:10px; }
     .termo-box.show-error .field-error { display:block; }
     .termo-box.show-error { border-color: var(--error); }
 
@@ -177,100 +177,7 @@
     .check-row input:checked ~ .check-box { border-color:var(--brass); background:rgba(176,141,70,.1); }
     .check-row input:checked ~ .check-box::after { opacity:1; }
     .check-row:hover .check-box { border-color:var(--brass); }
-    .check-text { font-size:13px; color:var(--paper-text); font-weight:300; line-height:1.6; }
-
-    /* ── PROGRESS BAR ── */
-    .form-progress {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--paper);
-      border-bottom: var(--rule) solid var(--paper-line);
-      padding: 14px var(--pad);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .progress-bar {
-      flex: 1;
-      height: 2px;
-      background: var(--paper-line);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--brass);
-      width: 0%;
-      transition: width .4s ease;
-      border-radius: 2px;
-    }
-    .progress-label {
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--paper-mute);
-      white-space: nowrap;
-    }
-
-    /* ── FIELD MELHORADO: label flutua quando preenchido ── */
-    .field { position: relative; display:flex; flex-direction:column; gap:9px; }
-    .field input:not(:placeholder-shown) + .field-error,
-    .field select:not([value=""]) + .field-error { /* keep */ }
-
-    /* ── CONTADOR DE CARACTERES ── */
-    .char-hint {
-      font-size: 9px;
-      color: var(--paper-mute);
-      letter-spacing: .06em;
-      text-align: right;
-      opacity: 0;
-      transition: opacity .2s;
-    }
-    .field input:focus ~ .char-hint { opacity: 1; }
-
-    /* ── FEEDBACK INLINE: campo preenchido ── */
-    .field input:not([value=""]):not(:placeholder-shown):not(.error) {
-      border-bottom-color: var(--brass);
-    }
-
-    /* ── SUBMIT ── */
-    .submit-wrap { padding-top:16px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
-    .submit-note-bottom {
-      font-size: 10px;
-      letter-spacing: .08em;
-      color: var(--paper-mute);
-      line-height: 1.7;
-    }
-    .submit-note-bottom a { color: var(--brass); text-decoration: none; }
-    .btn-submit {
-      display:inline-flex; align-items:center; gap:16px;
-      padding:18px 48px; background:var(--ink); color:var(--paper);
-      font-family:var(--util); font-size:10px; font-weight:500;
-      letter-spacing:.3em; text-transform:uppercase;
-      border:var(--rule) solid var(--ink); cursor:pointer;
-      transition:background .35s ease, color .35s ease, transform .25s ease, border-color .35s ease;
-    }
-    .btn-submit span { width:22px; height:var(--rule); background:currentColor; display:block; transition:width .35s ease; }
-    .btn-submit:hover { background:transparent; color:var(--ink); border-color:var(--ink); transform:translateY(-2px); }
-    .btn-submit:hover span { width:34px; }
-    .btn-submit:disabled { opacity:.5; cursor:not-allowed; transform:none; }
-
-    /* ── CEP: feedback visual de carregamento ── */
-    .cep-loading { position:relative; }
-    .cep-loading::after {
-      content:'';
-      position:absolute; right:0; bottom:14px;
-      width:14px; height:14px;
-      border:1.5px solid var(--paper-line);
-      border-top-color:var(--brass);
-      border-radius:50%;
-      animation:spin .7s linear infinite;
-      opacity:0;
-      transition:opacity .2s;
-    }
-    .cep-loading.loading::after { opacity:1; }
+    .check-text { font-size:14px; color:var(--paper-text); font-weight:300; line-height:1.6; }
 
     /* MODAL */
     .modal-overlay {
@@ -335,7 +242,6 @@
   <!-- BARRA DE PROGRESSO -->
   <div class="form-progress" id="form-progress">
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-    <span class="progress-label" id="progress-label">0 de 8 campos</span>
   </div>
 
   <section id="form-section">
@@ -467,32 +373,6 @@
 
       <hr class="block-rule" />
 
-      <div class="form-block rise" data-d="3">
-        <div class="block-eyebrow">Curadoria</div>
-        <label class="check-row">
-          <input type="checkbox" id="curadoria" />
-          <span class="check-box"></span>
-          <span class="check-text">Sim, desejo ingressar <strong style="color:var(--paper-text);">com curadoria</strong> <span style="color:var(--paper-mute);">(adicional de R$500,00/mês)</span></span>
-        </label>
-      </div>
-
-      <hr class="block-rule" />
-
-      <div class="form-block rise" data-d="3">
-        <div class="block-eyebrow">Condições de pagamento</div>
-        <div class="termo-box">
-          <p class="termo-texto">A primeira mensalidade deverá ser paga no momento do envio do contrato. As mensalidades seguintes serão devidas a cada 30 (trinta) dias, contados a partir da data da primeira aula. O pagamento será efetuado mensalmente via PIX (CPF: 383.152.268-51).<br><br>O valor pago no momento da contratação não será reembolsado em nenhuma hipótese, seja em caso de desistência antes ou após o início das aulas. Esse valor corresponde à garantia da vaga e aos custos administrativos necessários para o início do curso, sendo, portanto, irrestituível.</p>
-          <label class="check-row">
-            <input type="checkbox" id="termo-pagamento" />
-            <span class="check-box"></span>
-            <span class="check-text">Estou de acordo <span style="color:var(--brass);">*</span></span>
-          </label>
-          <span class="field-error" id="erro-pagamento">É necessário concordar para continuar.</span>
-        </div>
-      </div>
-
-      <hr class="block-rule" />
-
       <div class="form-block rise" data-d="4">
         <div class="block-eyebrow">Política de cancelamento</div>
         <div class="termo-box">
@@ -604,35 +484,6 @@
       }
     });
 
-    /* ── PROGRESSO ── */
-    const progressFill = document.getElementById('progress-fill');
-    const progressLabel = document.getElementById('progress-label');
-    const REQUIRED_IDS = ['nome','cpf','telefone','email','profissao','cep','modalidade'];
-    const REQUIRED_CHECKS = ['termo-pagamento','termo-cancelamento'];
-    const TOTAL = REQUIRED_IDS.length + REQUIRED_CHECKS.length;
-
-    function updateProgress() {
-      let filled = 0;
-      REQUIRED_IDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el && el.value.trim() !== '' && el.value !== '') filled++;
-      });
-      REQUIRED_CHECKS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el && el.checked) filled++;
-      });
-      const pct = Math.round((filled / TOTAL) * 100);
-      progressFill.style.width = pct + '%';
-      progressLabel.textContent = filled + ' de ' + TOTAL + ' campos';
-    }
-
-    // Observa mudanças em todos os campos
-    document.querySelectorAll('input, select').forEach(el => {
-      el.addEventListener('input', updateProgress);
-      el.addEventListener('change', updateProgress);
-    });
-    updateProgress();
-
     /* ── LIMPA ERRO AO DIGITAR ── */
     document.querySelectorAll('.field input, .field select').forEach(el => {
       el.addEventListener('input', () => {
@@ -743,7 +594,6 @@ CEP: ${payload.cep}
 
 PROGRAMA
 Modalidade: ${payload.modalidade}
-Curadoria: ${payload.curadoria}
 
 Data: ${payload.timestamp}`;
       window.open(`https://wa.me/5514997758941?text=${encodeURIComponent(msg)}`,'_blank');
