@@ -129,7 +129,7 @@
       color: var(--paper-mute); text-transform: uppercase;
     }
     .field label .req { color: var(--brass); margin-left: 2px; }
-    .field input, .field select {
+    .field input {
       background: transparent; border: none;
       border-bottom: var(--rule) solid rgba(7,14,27,.2);
       color: var(--paper-text); font-family: var(--display);
@@ -139,11 +139,56 @@
       -webkit-appearance: none; border-radius: 0;
     }
     .field input::placeholder { color:rgba(20,28,43,.22); font-style:italic; font-size:20px; }
-    .field input:focus, .field select:focus { border-bottom-color: var(--brass); }
-    .field input.error, .field select.error { border-bottom-color: var(--error); }
+    .field input:focus { border-bottom-color: var(--brass); }
+    .field input.error { border-bottom-color: var(--error); }
+
+    /* ── SELECT CUSTOMIZADO ── */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 16px; top: 50%; transform: translateY(-50%);
+      width: 8px; height: 8px;
+      border-right: 1.5px solid var(--brass);
+      border-bottom: 1.5px solid var(--brass);
+      transform: translateY(-70%) rotate(45deg);
+      pointer-events: none;
+      transition: transform .2s;
+    }
+    .select-wrap:focus-within::after {
+      transform: translateY(-30%) rotate(-135deg);
+    }
+    .field select {
+      background: var(--paper-2);
+      border: var(--rule) solid rgba(7,14,27,.14);
+      border-radius: 6px;
+      color: var(--paper-text);
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 300;
+      padding: 16px 44px 16px 18px;
+      outline: none;
+      transition: border-color .25s, box-shadow .25s, background .25s;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+    .field select:focus {
+      border-color: var(--brass);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(176,141,70,.12);
+    }
+    .field select.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(192,57,43,.10);
+    }
+    .field select option { background: #fff; color: var(--paper-text); }
+    .field select option:disabled { color: rgba(20,28,43,.35); }
+
     .field .field-error { font-size:11px; color:var(--error); letter-spacing:.06em; display:none; }
     .field.show-error .field-error { display:block; }
-    .field select option { background: var(--paper); color: var(--paper-text); }
+    .field.show-error .select-wrap select { border-color: var(--error); box-shadow: 0 0 0 3px rgba(192,57,43,.10); }
     input[type="date"]::-webkit-calendar-picker-indicator { filter:none; opacity:.4; }
 
     .block-rule { border:none; border-top:var(--rule) solid var(--paper-line); margin:0 0 52px; }
@@ -284,13 +329,13 @@
         <div class="form-grid col-2">
           <div class="field">
             <label>Profissão <span class="req">*</span></label>
-            <select id="profissao">
+            <div class="select-wrap"><select id="profissao">
               <option value="" disabled selected>Selecione</option>
               <option>Médico(a)</option>
               <option>Médico(a) Residente</option>
               <option>Estudante de Medicina</option>
               <option>Outro</option>
-            </select>
+            </select></div>
             <span class="field-error">Selecione sua profissão.</span>
           </div>
           <div class="field">
@@ -328,7 +373,7 @@
             </div>
             <div class="field">
               <label>UF <span class="req">*</span></label>
-              <select id="uf">
+              <div class="select-wrap"><select id="uf">
                 <option value="" disabled selected>UF</option>
                 <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
                 <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
@@ -337,7 +382,7 @@
                 <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
                 <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
                 <option selected>SP</option><option>SE</option><option>TO</option>
-              </select>
+              </select></div>
               <span class="field-error">Selecione o estado.</span>
             </div>
             <div class="field">
@@ -360,12 +405,12 @@
         <div class="form-grid col-2">
           <div class="field">
             <label>Modalidade <span class="req">*</span></label>
-            <select id="modalidade">
+            <div class="select-wrap"><select id="modalidade">
               <option value="" disabled selected>Selecione</option>
               <option>Individual</option>
               <option>Em dupla</option>
               <option>Em grupo</option>
-            </select>
+            </select></div>
             <span class="field-error">Selecione a modalidade.</span>
           </div>
         </div>
