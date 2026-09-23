@@ -564,7 +564,13 @@
           <div class="field">
             <label>Profissão <span class="req">*</span></label>
             <div class="cd" id="cd-profissao" tabindex="0">
-              <select id="profissao" aria-hidden="true"></select>
+              <select id="profissao" aria-hidden="true">
+                <option value="">Selecione</option>
+                <option value="Médico(a)">Médico(a)</option>
+                <option value="Médico(a) Residente">Médico(a) Residente</option>
+                <option value="Estudante de Medicina">Estudante de Medicina</option>
+                <option value="Outro">Outro</option>
+              </select>
               <div class="cd-trigger placeholder" id="cd-profissao-trigger">Selecione<span class="cd-arrow"></span></div>
               <div class="cd-list">
                 <div class="cd-option" data-value="Médico(a)">Médico(a)</div>
@@ -588,7 +594,12 @@
           <div class="field">
             <label>Modalidade <span class="req">*</span></label>
             <div class="cd" id="cd-modalidade" tabindex="0">
-              <select id="modalidade" aria-hidden="true"></select>
+              <select id="modalidade" aria-hidden="true">
+                <option value="">Selecione</option>
+                <option value="Individual">Individual</option>
+                <option value="Em dupla">Em dupla</option>
+                <option value="Em grupo">Em grupo</option>
+              </select>
               <div class="cd-trigger placeholder" id="cd-modalidade-trigger">Selecione<span class="cd-arrow"></span></div>
               <div class="cd-list">
                 <div class="cd-option" data-value="Individual">Individual</div>
@@ -722,7 +733,8 @@
           close();
           // limpa erro
           cd.classList.remove('error');
-          cd.closest('.field').classList.remove('show-error');
+          const wrap = cd.closest('.field');
+          if (wrap) wrap.classList.remove('show-error');
           updateProgress();
         });
       });
@@ -738,8 +750,12 @@
 
     /* ── helper: aplica erro ao custom dropdown ── */
     function cdError(selectId, hasError) {
-      const cd = document.querySelector('[id="cd-' + selectId + '"]');
-      if (cd) cd.classList.toggle('error', hasError);
+      const cd = document.getElementById('cd-' + selectId);
+      if (cd) {
+        cd.classList.toggle('error', hasError);
+        const wrap = cd.closest('.field');
+        if (wrap) wrap.classList.toggle('show-error', hasError);
+      }
     }
 
         document.getElementById('scroll-down').addEventListener('click', () => {
@@ -817,11 +833,19 @@
     });
 
     function required(id) {
-      const el = document.getElementById(id), wrap = el.closest('.field');
-      const ok = el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='';
-      if (el.tagName==='SELECT') { cdError(id, !ok); }
-      else { el.classList.toggle('error',!ok); }
-      wrap.classList.toggle('show-error',!ok);
+      const el = document.getElementById(id);
+      if (!el) return true;
+      // Para selects dentro de custom dropdown, o select nativo fica fora do .field
+      // então precisamos encontrar o .field pelo cd pai
+      const cd = document.getElementById('cd-' + id);
+      const wrap = cd ? cd.closest('.field') : el.closest('.field');
+      const ok = el.tagName === 'SELECT' ? el.value !== '' : el.value.trim() !== '';
+      if (cd) {
+        cd.classList.toggle('error', !ok);
+      } else if (el.tagName !== 'SELECT') {
+        el.classList.toggle('error', !ok);
+      }
+      if (wrap) wrap.classList.toggle('show-error', !ok);
       return ok;
     }
     function validEmail(id) {
@@ -875,7 +899,6 @@
         profissao: document.getElementById('profissao').value,
         especialidade: document.getElementById('especialidade').value.trim(),
         modalidade: document.getElementById('modalidade').value,
-        curadoria: document.getElementById('curadoria').checked ? 'Sim' : 'Não',
         termoPagamento: document.getElementById('termo-pagamento').checked ? 'Sim' : 'Não',
         termoCancelamento: document.getElementById('termo-cancelamento').checked ? 'Sim' : 'Não',
         cep: document.getElementById('cep').value.trim(),
