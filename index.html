@@ -702,63 +702,75 @@
     document.querySelectorAll('.rise').forEach(el => io.observe(el));
 
     /* ── CUSTOM DROPDOWNS ── */
-    function initCustomDropdown(cdId, selectId) {
+    // Valor fica em cd.dataset.value — sem depender de select nativo (iOS Safari compat)
+    function initCustomDropdown(cdId) {
       const cd = document.getElementById(cdId);
       if (!cd) return;
       const trigger = cd.querySelector('.cd-trigger');
-      const list = cd.querySelector('.cd-list');
       const options = cd.querySelectorAll('.cd-option');
-      const select = document.getElementById(selectId);
 
-      function open() { cd.classList.add('open'); }
-      function close() { cd.classList.remove('open'); }
+      function open()   { cd.classList.add('open'); }
+      function close()  { cd.classList.remove('open'); }
       function toggle() { cd.classList.contains('open') ? close() : open(); }
 
-      trigger.addEventListener('click', toggle);
-      cd.addEventListener('keydown', e => {
+      trigger.addEventListener('click', function(e) { e.stopPropagation(); toggle(); });
+      cd.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
         if (e.key === 'Escape') close();
       });
 
-      options.forEach(opt => {
-        opt.addEventListener('click', () => {
-          const val = opt.dataset.value;
-          // atualiza select nativo (para validação)
-          select.value = val;
+      options.forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var val = opt.getAttribute('data-value');
+          // guarda valor no próprio elemento — funciona em todos os browsers/iOS
+          cd.setAttribute('data-value', val);
           // atualiza visual
-          trigger.innerHTML = val + '<span class="cd-arrow"></span>';
+          trigger.textContent = val;
           trigger.classList.remove('placeholder');
-          options.forEach(o => o.classList.remove('selected'));
+          // adiciona a seta de volta (foi removida pelo textContent)
+          var arrow = document.createElement('span');
+          arrow.className = 'cd-arrow';
+          trigger.appendChild(arrow);
+          options.forEach(function(o) { o.classList.remove('selected'); });
           opt.classList.add('selected');
           close();
           // limpa erro
           cd.classList.remove('error');
-          const wrap = cd.closest('.field');
+          var wrap = cd.closest('.field');
           if (wrap) wrap.classList.remove('show-error');
           updateProgress();
         });
       });
 
       // fecha ao clicar fora
-      document.addEventListener('click', e => {
+      document.addEventListener('click', function(e) {
         if (!cd.contains(e.target)) close();
       });
     }
 
-    initCustomDropdown('cd-profissao', 'profissao');
-    initCustomDropdown('cd-modalidade', 'modalidade');
+    initCustomDropdown('cd-profissao');
+    initCustomDropdown('cd-modalidade');
 
-    /* ── helper: aplica erro ao custom dropdown ── */
-    function cdError(selectId, hasError) {
-      const cd = document.getElementById('cd-' + selectId);
-      if (cd) {
-        cd.classList.toggle('error', hasError);
-        const wrap = cd.closest('.field');
-        if (wrap) wrap.classList.toggle('show-error', hasError);
-      }
+    /* ── helper: lê valor do custom dropdown ── */
+    function cdValue(cdId) {
+      var cd = document.getElementById(cdId);
+      return cd ? (cd.getAttribute('data-value') || '') : '';
     }
 
-        document.getElementById('scroll-down').addEventListener('click', () => {
+    /* ── helper: aplica/remove erro visual no dropdown ── */
+    function cdError(cdId, hasError) {
+      var cd = document.getElementById(cdId);
+      if (!cd) return;
+      cd.classList.toggle('error', hasError);
+      var wrap = cd.closest('.field');
+      if (wrap) wrap.classList.toggle('show-error', hasError);
+    }
+
+    /* ── PROGRESSO (stub — mantém compatibilidade com chamadas nos dropdowns) ── */
+    function updateProgress() {}
+
+            document.getElementById('scroll-down').addEventListener('click', () => {
       document.getElementById('form-section').scrollIntoView({ behavior:'smooth', block:'start' });
     });
 
@@ -833,18 +845,18 @@
     });
 
     function required(id) {
-      const el = document.getElementById(id);
+      var el = document.getElementById(id);
       if (!el) return true;
-      // Para selects dentro de custom dropdown, o select nativo fica fora do .field
-      // então precisamos encontrar o .field pelo cd pai
-      const cd = document.getElementById('cd-' + id);
-      const wrap = cd ? cd.closest('.field') : el.closest('.field');
-      const ok = el.tagName === 'SELECT' ? el.value !== '' : el.value.trim() !== '';
+      var cd = document.getElementById('cd-' + id);
       if (cd) {
-        cd.classList.toggle('error', !ok);
-      } else if (el.tagName !== 'SELECT') {
-        el.classList.toggle('error', !ok);
+        // custom dropdown: lê data-value diretamente
+        var ok = cdValue('cd-' + id) !== '';
+        cdError('cd-' + id, !ok);
+        return ok;
       }
+      var wrap = el.closest('.field');
+      var ok = el.tagName === 'SELECT' ? el.value !== '' : el.value.trim() !== '';
+      el.classList.toggle('error', !ok);
       if (wrap) wrap.classList.toggle('show-error', !ok);
       return ok;
     }
@@ -896,9 +908,9 @@
         nascimento: document.getElementById('nascimento').value,
         telefone: document.getElementById('telefone').value.trim(),
         email: document.getElementById('email').value.trim(),
-        profissao: document.getElementById('profissao').value,
+        profissao: cdValue('cd-profissao'),
         especialidade: document.getElementById('especialidade').value.trim(),
-        modalidade: document.getElementById('modalidade').value,
+        modalidade: cdValue('cd-modalidade'),
         termoPagamento: document.getElementById('termo-pagamento').checked ? 'Sim' : 'Não',
         termoCancelamento: document.getElementById('termo-cancelamento').checked ? 'Sim' : 'Não',
         cep: document.getElementById('cep').value.trim(),
