@@ -142,54 +142,122 @@
     .field input:focus { border-bottom-color: var(--brass); }
     .field input.error { border-bottom-color: var(--error); }
 
-    /* ── SELECT CUSTOMIZADO ── */
+    /* ── NATIVE SELECT: escondido, usado só para validação ── */
     .select-wrap { position: relative; }
-    .select-wrap::after {
-      content: '';
-      position: absolute;
-      right: 16px; top: 50%; transform: translateY(-50%);
-      width: 8px; height: 8px;
-      border-right: 1.5px solid var(--brass);
-      border-bottom: 1.5px solid var(--brass);
-      transform: translateY(-70%) rotate(45deg);
-      pointer-events: none;
-      transition: transform .2s;
-    }
-    .select-wrap:focus-within::after {
-      transform: translateY(-30%) rotate(-135deg);
-    }
     .field select {
-      background: var(--paper-2);
-      border: var(--rule) solid rgba(7,14,27,.14);
-      border-radius: 6px;
+      position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;
+    }
+
+    /* ── CUSTOM DROPDOWN ── */
+    .cd { position: relative; user-select: none; }
+    .cd-trigger {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #fff;
+      border: var(--rule) solid rgba(7,14,27,.16);
+      border-radius: 8px;
       color: var(--paper-text);
       font-family: var(--display);
       font-size: 20px;
       font-weight: 300;
-      padding: 16px 44px 16px 18px;
-      outline: none;
-      transition: border-color .25s, box-shadow .25s, background .25s;
-      width: 100%;
-      -webkit-appearance: none;
-      appearance: none;
+      padding: 16px 20px;
       cursor: pointer;
+      transition: border-color .25s, box-shadow .25s;
+      outline: none;
     }
-    .field select:focus {
+    .cd-trigger:focus, .cd.open .cd-trigger {
       border-color: var(--brass);
-      background: #fff;
       box-shadow: 0 0 0 3px rgba(176,141,70,.12);
     }
-    .field select.error {
+    .cd-trigger.placeholder { color: rgba(20,28,43,.35); font-style: italic; }
+    .cd-arrow {
+      width: 8px; height: 8px; min-width: 8px;
+      border-right: 1.5px solid var(--brass);
+      border-bottom: 1.5px solid var(--brass);
+      transform: rotate(45deg);
+      transition: transform .25s cubic-bezier(.4,0,.2,1);
+      margin-top: -4px;
+    }
+    .cd.open .cd-arrow { transform: rotate(-135deg); margin-top: 4px; }
+    .cd-list {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 100;
+      background: #fff;
+      border: var(--rule) solid rgba(7,14,27,.12);
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(7,14,27,.10), 0 2px 8px rgba(7,14,27,.06);
+      overflow: hidden;
+      opacity: 0; transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .cd.open .cd-list { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .cd-option {
+      padding: 14px 20px;
+      font-family: var(--display);
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--paper-text);
+      cursor: pointer;
+      transition: background .15s;
+      border-bottom: var(--rule) solid rgba(7,14,27,.06);
+    }
+    .cd-option:last-child { border-bottom: none; }
+    .cd-option:hover { background: rgba(176,141,70,.07); color: var(--brass); }
+    .cd-option.selected {
+      color: var(--brass);
+      background: rgba(176,141,70,.06);
+      font-weight: 400;
+    }
+    .cd-option.selected::after {
+      content: '✓';
+      float: right;
+      color: var(--brass);
+      font-size: 14px;
+    }
+    /* erro */
+    .cd.error .cd-trigger {
       border-color: var(--error);
       box-shadow: 0 0 0 3px rgba(192,57,43,.10);
     }
-    .field select option { background: #fff; color: var(--paper-text); }
-    .field select option:disabled { color: rgba(20,28,43,.35); }
+    .field.show-error .cd-trigger {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(192,57,43,.10);
+    }
 
     .field .field-error { font-size:11px; color:var(--error); letter-spacing:.06em; display:none; }
     .field.show-error .field-error { display:block; }
-    .field.show-error .select-wrap select { border-color: var(--error); box-shadow: 0 0 0 3px rgba(192,57,43,.10); }
     input[type="date"]::-webkit-calendar-picker-indicator { filter:none; opacity:.4; }
+    /* UF nativo estilizado */
+    .uf-wrap { position: relative; }
+    .uf-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px; top: 50%;
+      width: 7px; height: 7px;
+      border-right: 1.5px solid var(--brass);
+      border-bottom: 1.5px solid var(--brass);
+      transform: translateY(-70%) rotate(45deg);
+      pointer-events: none;
+    }
+    .uf-wrap select {
+      position: static !important; opacity: 1 !important;
+      pointer-events: auto !important; width: 100% !important; height: auto !important;
+      background: #fff;
+      border: var(--rule) solid rgba(7,14,27,.16) !important;
+      border-radius: 8px !important;
+      color: var(--paper-text);
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 300;
+      padding: 16px 40px 16px 18px !important;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .uf-wrap select:focus {
+      border-color: var(--brass) !important;
+      box-shadow: 0 0 0 3px rgba(176,141,70,.12);
+    }
 
     .block-rule { border:none; border-top:var(--rule) solid var(--paper-line); margin:0 0 52px; }
 
@@ -329,13 +397,16 @@
         <div class="form-grid col-2">
           <div class="field">
             <label>Profissão <span class="req">*</span></label>
-            <div class="select-wrap"><select id="profissao">
-              <option value="" disabled selected>Selecione</option>
-              <option>Médico(a)</option>
-              <option>Médico(a) Residente</option>
-              <option>Estudante de Medicina</option>
-              <option>Outro</option>
-            </select></div>
+            <div class="cd" id="cd-profissao" tabindex="0">
+              <select id="profissao" aria-hidden="true"></select>
+              <div class="cd-trigger placeholder" id="cd-profissao-trigger">Selecione<span class="cd-arrow"></span></div>
+              <div class="cd-list">
+                <div class="cd-option" data-value="Médico(a)">Médico(a)</div>
+                <div class="cd-option" data-value="Médico(a) Residente">Médico(a) Residente</div>
+                <div class="cd-option" data-value="Estudante de Medicina">Estudante de Medicina</div>
+                <div class="cd-option" data-value="Outro">Outro</div>
+              </div>
+            </div>
             <span class="field-error">Selecione sua profissão.</span>
           </div>
           <div class="field">
@@ -373,7 +444,7 @@
             </div>
             <div class="field">
               <label>UF <span class="req">*</span></label>
-              <div class="select-wrap"><select id="uf">
+              <div class="select-wrap uf-wrap"><select id="uf">
                 <option value="" disabled selected>UF</option>
                 <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
                 <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
@@ -405,12 +476,15 @@
         <div class="form-grid col-2">
           <div class="field">
             <label>Modalidade <span class="req">*</span></label>
-            <div class="select-wrap"><select id="modalidade">
-              <option value="" disabled selected>Selecione</option>
-              <option>Individual</option>
-              <option>Em dupla</option>
-              <option>Em grupo</option>
-            </select></div>
+            <div class="cd" id="cd-modalidade" tabindex="0">
+              <select id="modalidade" aria-hidden="true"></select>
+              <div class="cd-trigger placeholder" id="cd-modalidade-trigger">Selecione<span class="cd-arrow"></span></div>
+              <div class="cd-list">
+                <div class="cd-option" data-value="Individual">Individual</div>
+                <div class="cd-option" data-value="Em dupla">Em dupla</div>
+                <div class="cd-option" data-value="Em grupo">Em grupo</div>
+              </div>
+            </div>
             <span class="field-error">Selecione a modalidade.</span>
           </div>
         </div>
@@ -471,7 +545,59 @@
     }, { threshold: .1 });
     document.querySelectorAll('.rise').forEach(el => io.observe(el));
 
-    document.getElementById('scroll-down').addEventListener('click', () => {
+    /* ── CUSTOM DROPDOWNS ── */
+    function initCustomDropdown(cdId, selectId) {
+      const cd = document.getElementById(cdId);
+      if (!cd) return;
+      const trigger = cd.querySelector('.cd-trigger');
+      const list = cd.querySelector('.cd-list');
+      const options = cd.querySelectorAll('.cd-option');
+      const select = document.getElementById(selectId);
+
+      function open() { cd.classList.add('open'); }
+      function close() { cd.classList.remove('open'); }
+      function toggle() { cd.classList.contains('open') ? close() : open(); }
+
+      trigger.addEventListener('click', toggle);
+      cd.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        if (e.key === 'Escape') close();
+      });
+
+      options.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const val = opt.dataset.value;
+          // atualiza select nativo (para validação)
+          select.value = val;
+          // atualiza visual
+          trigger.innerHTML = val + '<span class="cd-arrow"></span>';
+          trigger.classList.remove('placeholder');
+          options.forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          close();
+          // limpa erro
+          cd.classList.remove('error');
+          cd.closest('.field').classList.remove('show-error');
+          updateProgress();
+        });
+      });
+
+      // fecha ao clicar fora
+      document.addEventListener('click', e => {
+        if (!cd.contains(e.target)) close();
+      });
+    }
+
+    initCustomDropdown('cd-profissao', 'profissao');
+    initCustomDropdown('cd-modalidade', 'modalidade');
+
+    /* ── helper: aplica erro ao custom dropdown ── */
+    function cdError(selectId, hasError) {
+      const cd = document.querySelector('[id="cd-' + selectId + '"]');
+      if (cd) cd.classList.toggle('error', hasError);
+    }
+
+        document.getElementById('scroll-down').addEventListener('click', () => {
       document.getElementById('form-section').scrollIntoView({ behavior:'smooth', block:'start' });
     });
 
@@ -548,7 +674,10 @@
     function required(id) {
       const el = document.getElementById(id), wrap = el.closest('.field');
       const ok = el.tagName==='SELECT' ? el.value!=='' : el.value.trim()!=='';
-      el.classList.toggle('error',!ok); wrap.classList.toggle('show-error',!ok); return ok;
+      if (el.tagName==='SELECT') { cdError(id, !ok); }
+      else { el.classList.toggle('error',!ok); }
+      wrap.classList.toggle('show-error',!ok);
+      return ok;
     }
     function validEmail(id) {
       const el = document.getElementById(id), wrap = el.closest('.field');
