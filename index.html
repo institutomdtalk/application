@@ -113,12 +113,13 @@
     .block-eyebrow::before { content:""; width:26px; height:var(--rule); background:currentColor; opacity:.55; }
 
     .form-grid { display:grid; gap:28px; }
+    .cep-top-grid { grid-template-columns: 2fr 1fr 1.5fr; }
     .col-2 { grid-template-columns:1fr 1fr; }
     .col-full { grid-column:1/-1; }
 
     .cep-reveal-group {
-      display:grid; grid-template-columns:1fr 1fr; gap:20px;
-      grid-column:1/-1; opacity:0; max-height:0; overflow:hidden;
+      display:grid; grid-template-columns:1fr 1fr; gap:28px;
+      opacity:0; max-height:0; overflow:hidden;
       pointer-events:none; transition:opacity .55s ease, max-height .55s ease;
     }
     .cep-reveal-group.revealed { opacity:1; max-height:600px; pointer-events:all; }
@@ -333,6 +334,7 @@
 
     @media (max-width:680px) {
       .col-2 { grid-template-columns:1fr; }
+      .cep-top-grid { grid-template-columns:1fr; }
       .cep-reveal-group { grid-template-columns:1fr; }
       .modal { padding:44px 28px; }
     }
@@ -390,16 +392,24 @@
         </div>
       </div>
 
-      <hr class="block-rule" />
-
       <div class="form-block rise" data-d="2">
         <div class="block-eyebrow">Endereço</div>
-        <div class="form-grid col-2">
+        <div class="form-grid cep-top-grid">
           <div class="field cep-loading" id="cep-field">
             <label>CEP <span class="req">*</span></label>
             <input type="text" id="cep" placeholder="00000-000" maxlength="9" />
             <span class="field-error">Informe um CEP válido.</span>
           </div>
+          <div class="field">
+            <label>Número <span class="req">*</span></label>
+            <input type="text" id="numero" placeholder="000" />
+            <span class="field-error">Informe o número.</span>
+          </div>
+          <div class="field">
+            <label>Complemento</label>
+            <input type="text" id="complemento" placeholder="Apto, sala, bloco…" />
+          </div>
+        </div>
           <div class="cep-reveal-group" id="cep-reveal-group">
             <div class="field col-full" style="grid-column:1/-1;">
               <label>Endereço <span class="req">*</span></label>
@@ -430,15 +440,7 @@
               </select></div>
               <span class="field-error">Selecione o estado.</span>
             </div>
-            <div class="field">
-              <label>Número <span class="req">*</span></label>
-              <input type="text" id="numero" placeholder="000" />
-              <span class="field-error">Informe o número.</span>
-            </div>
-            <div class="field">
-              <label>Complemento</label>
-              <input type="text" id="complemento" placeholder="Apto, sala, bloco…" />
-            </div>
+
           </div>
         </div>
       </div>
