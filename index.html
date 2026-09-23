@@ -322,7 +322,48 @@
     }
     .modal-close:hover { background:rgba(7,14,27,.06); border-color:rgba(7,14,27,.4); }
 
-    /* FOOTER */
+    /* ── SUBMIT ── */
+    .submit-wrap { padding-top: 32px; }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 52px;
+      background: #0B2A5A;
+      color: #fff;
+      font-family: var(--util);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(11,42,90,.22), 0 1px 4px rgba(11,42,90,.14);
+      transition: background .25s ease, transform .2s ease, box-shadow .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 60%);
+      pointer-events: none;
+      border-radius: 8px;
+    }
+    .btn-submit .wa-icon {
+      width: 20px; height: 20px; min-width: 20px;
+      fill: #fff; flex-shrink: 0;
+    }
+    .btn-submit:hover {
+      background: #0d3370;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(11,42,90,.32), 0 2px 8px rgba(11,42,90,.18);
+    }
+    .btn-submit:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(11,42,90,.18); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* ── FOOTER */
     footer { background:var(--paper); border-top:var(--rule) solid var(--paper-line); padding:36px var(--pad); text-align:center; }
     .footer-brand { font-family:var(--display); font-size:13px; font-weight:400; letter-spacing:.28em; text-transform:uppercase; color:var(--brass); }
     footer p { margin-top:8px; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--paper-mute); }
@@ -354,10 +395,6 @@
     </div>
   </section>
 
-  <!-- BARRA DE PROGRESSO -->
-  <div class="form-progress" id="form-progress">
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-  </div>
 
   <section id="form-section">
     <div class="inner">
@@ -487,7 +524,20 @@
         </div>
       </div>
 
-      <div class="form-block rise" data-d="4">
+      <div class="form-block rise" data-d="3">
+        <div class="block-eyebrow">Condições de pagamento</div>
+        <div class="termo-box">
+          <p class="termo-texto">O pagamento da <strong style="color:var(--paper-text);font-weight:400;">primeira mensalidade</strong> é realizado sempre no início do ciclo de 30 dias — ou seja, no ato da formalização deste contrato. A <strong style="color:var(--paper-text);font-weight:400;">segunda mensalidade</strong> e as subsequentes serão devidas a cada 30 (trinta) dias, contados a partir da data de início da primeira aula.<br><br>O pagamento é efetuado mensalmente via <strong style="color:var(--paper-text);font-weight:400;">PIX — CPF: 383.152.268-51</strong>.<br><br>O valor pago no momento da contratação não será reembolsado em nenhuma hipótese, seja em caso de desistência antes ou após o início das aulas. Esse valor corresponde à garantia da vaga e aos custos administrativos necessários para o início do curso, sendo, portanto, irrestituível.</p>
+          <label class="check-row">
+            <input type="checkbox" id="termo-pagamento" />
+            <span class="check-box"></span>
+            <span class="check-text">Estou de acordo <span style="color:var(--brass);">*</span></span>
+          </label>
+          <span class="field-error" id="erro-pagamento">É necessário concordar para continuar.</span>
+        </div>
+      </div>
+
+            <div class="form-block rise" data-d="4">
         <div class="block-eyebrow">Política de cancelamento</div>
         <div class="termo-box">
           <p class="termo-texto">Caso seja necessário interromper o curso por qualquer motivo, solicitamos que a comunicação seja feita com pelo menos 21 (vinte e um) dias de antecedência à data de vencimento da próxima mensalidade. Esse prazo é essencial para que possamos nos reorganizar adequadamente.</p>
@@ -503,8 +553,13 @@
       <hr class="block-rule" />
 
       <div class="submit-wrap rise" data-d="4">
-        <button class="btn-submit" id="btn-submit" type="button">Enviar via WhatsApp <span></span></button>
-        <p class="submit-note-bottom">Ao enviar, você será redirecionado(a) ao WhatsApp com os dados já preenchidos.</p>
+        <button class="btn-submit" id="btn-submit" type="button">
+          <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12.004 2.003C6.477 2.003 2 6.479 2 12.006c0 1.77.463 3.433 1.27 4.88L2.004 22l5.272-1.381A9.946 9.946 0 0012.004 22C17.531 22 22 17.524 22 12.006c0-5.52-4.469-10.003-9.996-10.003zm0 18.18c-1.668 0-3.238-.456-4.588-1.248l-.328-.195-3.127.82.833-3.044-.214-.34A8.14 8.14 0 013.86 12.006c0-4.494 3.655-8.148 8.144-8.148 4.49 0 8.145 3.654 8.145 8.148 0 4.49-3.655 8.177-8.145 8.177z"/>
+          </svg>
+          Enviar via WhatsApp
+        </button>
       </div>
 
     </div>
