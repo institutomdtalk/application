@@ -61,7 +61,7 @@
         linear-gradient(to right, rgba(7,14,27,.96) 0%, rgba(7,14,27,.78) 50%, rgba(7,14,27,.55) 100%),
         linear-gradient(to bottom, rgba(7,14,27,.82) 0%, rgba(7,14,27,.18) 44%, rgba(7,14,27,.92) 100%);
     }
-    .hero-body { position: relative; z-index: 2; max-width: 900px; }
+    .hero-body { position: relative; z-index: 2; max-width: 860px; width: 100%; margin: 0 auto; }
     .eyebrow {
       font-family: var(--util); font-size: 11px; font-weight: 500;
       letter-spacing: .3em; text-transform: uppercase;
@@ -264,15 +264,41 @@
 
     /* ── TERMO BOX ── */
     .termo-box {
-      background: rgba(7,14,27,.04);
-      border: var(--rule) solid var(--paper-line);
-      border-radius: 3px;
-      padding: 24px 26px;
+      background: #fff;
+      border-radius: 10px;
+      border: var(--rule) solid rgba(7,14,27,.10);
+      box-shadow: 0 2px 12px rgba(7,14,27,.05);
+      padding: 32px 36px;
+      position: relative;
     }
-    .termo-texto { font-size:14px; line-height:1.9; color:var(--paper-mute); font-weight:300; }
+    .termo-box::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 3px;
+      background: var(--brass);
+      border-radius: 0 3px 3px 0;
+      opacity: .55;
+    }
+    .termo-titulo {
+      font-family: var(--display);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 16px;
+      opacity: .8;
+    }
+    .termo-texto { font-size:14px; line-height:1.95; color:var(--paper-mute); font-weight:300; }
+    .termo-divider {
+      height: var(--rule);
+      background: var(--paper-line);
+      margin: 24px 0;
+    }
     .termo-box .field-error { font-size:11px; color:var(--error); letter-spacing:.06em; display:none; margin-top:10px; }
     .termo-box.show-error .field-error { display:block; }
-    .termo-box.show-error { border-color: var(--error); }
+    .termo-box.show-error { border-color: var(--error); box-shadow: 0 0 0 3px rgba(192,57,43,.07); }
 
     /* ── CHECKBOX ── */
     .check-row { display:flex; align-items:flex-start; gap:14px; cursor:pointer; margin-top:20px; }
@@ -364,9 +390,60 @@
     .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
 
     /* ── FOOTER */
-    footer { background:var(--paper); border-top:var(--rule) solid var(--paper-line); padding:36px var(--pad); text-align:center; }
-    .footer-brand { font-family:var(--display); font-size:13px; font-weight:400; letter-spacing:.28em; text-transform:uppercase; color:var(--brass); }
-    footer p { margin-top:8px; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--paper-mute); }
+    footer {
+      background: var(--ink-2);
+      border-top: none;
+      padding: 52px var(--pad) 44px;
+    }
+    .footer-inner {
+      width: 100%; max-width: 860px; margin: 0 auto;
+      display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 32px;
+    }
+    .footer-left {}
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--brass);
+      line-height: 1;
+    }
+    .footer-tagline {
+      margin-top: 10px;
+      font-size: 9.5px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.28);
+      font-weight: 400;
+    }
+    .footer-rule {
+      width: 40px; height: var(--rule);
+      background: var(--brass); opacity: .4;
+      margin: 20px 0;
+    }
+    .footer-sig {
+      font-size: 9px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.38);
+      line-height: 2;
+    }
+    .footer-sig strong {
+      font-weight: 500;
+      color: rgba(255,255,255,.6);
+      display: block;
+    }
+    .footer-right {
+      text-align: right;
+    }
+    .footer-copy {
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.22);
+    }
+    .footer-copy a { color: rgba(255,255,255,.35); text-decoration: none; }
 
     /* LOADER */
     .loader-overlay { position:fixed; inset:0; background:rgba(7,14,27,.7); backdrop-filter:blur(4px); z-index:900; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; }
@@ -528,10 +605,11 @@
         <div class="block-eyebrow">Condições de pagamento</div>
         <div class="termo-box">
           <p class="termo-texto">O pagamento da <strong style="color:var(--paper-text);font-weight:400;">primeira mensalidade</strong> é realizado sempre no início do ciclo de 30 dias — ou seja, no ato da formalização deste contrato. A <strong style="color:var(--paper-text);font-weight:400;">segunda mensalidade</strong> e as subsequentes serão devidas a cada 30 (trinta) dias, contados a partir da data de início da primeira aula.<br><br>O pagamento é efetuado mensalmente via <strong style="color:var(--paper-text);font-weight:400;">PIX — CPF: 383.152.268-51</strong>.<br><br>O valor pago no momento da contratação não será reembolsado em nenhuma hipótese, seja em caso de desistência antes ou após o início das aulas. Esse valor corresponde à garantia da vaga e aos custos administrativos necessários para o início do curso, sendo, portanto, irrestituível.</p>
+          <div class="termo-divider"></div>
           <label class="check-row">
             <input type="checkbox" id="termo-pagamento" />
             <span class="check-box"></span>
-            <span class="check-text">Estou de acordo <span style="color:var(--brass);">*</span></span>
+            <span class="check-text">Li e estou de acordo com as condições de pagamento <span style="color:var(--brass);">*</span></span>
           </label>
           <span class="field-error" id="erro-pagamento">É necessário concordar para continuar.</span>
         </div>
@@ -540,11 +618,12 @@
             <div class="form-block rise" data-d="4">
         <div class="block-eyebrow">Política de cancelamento</div>
         <div class="termo-box">
-          <p class="termo-texto">Caso seja necessário interromper o curso por qualquer motivo, solicitamos que a comunicação seja feita com pelo menos 21 (vinte e um) dias de antecedência à data de vencimento da próxima mensalidade. Esse prazo é essencial para que possamos nos reorganizar adequadamente.</p>
+          <p class="termo-texto">Caso seja necessário interromper o curso por qualquer motivo, solicitamos que a comunicação seja feita com pelo menos <strong style="color:var(--paper-text);font-weight:400;">21 (vinte e um) dias de antecedência</strong> à data de vencimento da próxima mensalidade. Esse prazo é essencial para que possamos nos reorganizar adequadamente.</p>
+          <div class="termo-divider"></div>
           <label class="check-row">
             <input type="checkbox" id="termo-cancelamento" />
             <span class="check-box"></span>
-            <span class="check-text">Estou de acordo <span style="color:var(--brass);">*</span></span>
+            <span class="check-text">Li e estou de acordo com a política de cancelamento <span style="color:var(--brass);">*</span></span>
           </label>
           <span class="field-error" id="erro-cancelamento">É necessário concordar para continuar.</span>
         </div>
@@ -566,8 +645,24 @@
   </section>
 
   <footer>
-    <div class="footer-brand">MD Talk</div>
-    <p>Instituto MD Talk · Medical English · © 2025</p>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-brand">MD Talk</div>
+        <div class="footer-tagline">Medical English for Physicians</div>
+        <div class="footer-rule"></div>
+        <div class="footer-sig">
+          <strong>Thaiana Faria</strong>
+          Especialista em Inglês Médico e Comunicação Científica · MD Talk
+        </div>
+        <div class="footer-sig" style="margin-top:12px;">
+          <strong>Thiago Faria</strong>
+          Produção de Conteúdo Técnico · The Engine Lab
+        </div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-copy">Instituto MD Talk<br>© 2025 · Todos os direitos reservados</div>
+      </div>
+    </div>
   </footer>
 
   <div class="loader-overlay" id="loader"><div class="loader-ring"></div></div>
